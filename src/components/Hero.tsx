@@ -1,0 +1,66 @@
+import styles from './Hero.module.css';
+import { Waves, Home, Target, Utensils, ChevronDown } from 'lucide-react';
+
+export default function Hero() {
+    return (
+        <section id="hero" className={styles.hero}>
+            <div className={styles.overlay}></div>
+            <video
+                className={styles.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/images/hero-poster.jpg"
+            >
+                <source src="/videos/hero.mp4" type="video/mp4" />
+            </video>
+
+            <div className={styles.content}>
+                <span className={styles.label}>Добро пожаловать в</span>
+                <h1 className={styles.title}>
+                    BEIBARYS
+                </h1>
+                <p className={styles.subtitle}>Территория комфорта</p>
+                <p className={styles.description}>
+                    Идеальное место для семейного отдыха, корпоративов и праздников
+                    всего в 30 минутах от центра Астаны
+                </p>
+                <div className={styles.buttons}>
+                    <a href="#booking" className="btn btn-primary">
+                        Забронировать
+                    </a>
+                    <a href="#services" className="btn btn-secondary">
+                        Узнать больше
+                    </a>
+                </div>
+
+                <div className={styles.features}>
+                    <div className={styles.feature}>
+                        <Waves className={styles.featureIcon} size={32} />
+                        <span className={styles.featureText}>Бассейн</span>
+                    </div>
+                    <div className={styles.feature}>
+                        <Home className={styles.featureIcon} size={32} />
+                        <span className={styles.featureText}>Домики</span>
+                    </div>
+                    <div className={styles.feature}>
+                        <Target className={styles.featureIcon} size={32} />
+                        <span className={styles.featureText}>Активности</span>
+                    </div>
+                    <div className={styles.feature}>
+                        <Utensils className={styles.featureIcon} size={32} />
+                        <span className={styles.featureText}>Ресторан</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.scrollIndicator}>
+                <span>Листайте</span>
+                <div className={styles.scrollArrow}>
+                    <ChevronDown size={20} />
+                </div>
+            </div>
+        </section>
+    );
+}

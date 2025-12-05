@@ -1,0 +1,95 @@
+.pricing {
+    background: var(--color-bg-alt);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.categoryTitle {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.list {
+    list-style: none;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    gap: 16px;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.itemName {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+.itemPrice {
+    font-weight: 700;
+    color: var(--color-primary);
+    white-space: nowrap;
+    font-size: 0.9375rem;
+}
+
+.itemPeriod {
+    font-weight: 400;
+    color: var(--color-text-light);
+    font-size: 0.8125rem;
+}
+
+.note {
+    text-align: center;
+    padding: 32px;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.note p {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+}
