@@ -4,17 +4,14 @@ import { Waves, Home, Target, Utensils, ChevronDown } from 'lucide-react';
 export default function Hero() {
     return (
         <section id="hero" className={styles.hero}>
+            {/* Background image */}
+            <div
+                className={styles.backgroundImage}
+                style={{
+                    backgroundImage: `url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop&q=80')`
+                }}
+            />
             <div className={styles.overlay}></div>
-            <video
-                className={styles.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/images/hero-poster.jpg"
-            >
-                <source src="/videos/hero.mp4" type="video/mp4" />
-            </video>
 
             <div className={styles.content}>
                 <span className={styles.label}>Добро пожаловать в</span>
