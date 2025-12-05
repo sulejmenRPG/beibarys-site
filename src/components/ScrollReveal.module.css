@@ -23,3 +23,17 @@
     opacity: 1;
     transform: translate(0, 0);
 }
+
+/* Disable transform animations on mobile to prevent scroll jumping */
+@media (max-width: 767px) {
+    .reveal {
+        opacity: 0;
+        transform: none !important;
+        transition: opacity 0.5s ease;
+    }
+
+    .reveal.visible {
+        opacity: 1;
+        transform: none !important;
+    }
+}
