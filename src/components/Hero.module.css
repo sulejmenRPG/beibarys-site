@@ -1,10 +1,16 @@
 .hero {
     position: relative;
     min-height: 100vh;
+    min-height: 100dvh;
+    /* Dynamic viewport height for mobile */
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding-top: 80px;
+    /* Space for header */
+    padding-bottom: 120px;
+    /* Space for scroll indicator */
 }
 
 .overlay {
@@ -47,23 +53,31 @@
 
 .label {
     display: inline-block;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-accent-light);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 0.2s;
     opacity: 0;
 }
 
+@media (min-width: 768px) {
+    .label {
+        font-size: 0.875rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 16px;
+    }
+}
+
 .title {
     font-family: var(--font-heading);
-    font-size: clamp(3.5rem, 12vw, 8rem);
+    font-size: clamp(2.5rem, 10vw, 8rem);
     font-weight: 700;
     color: var(--color-text-inverse);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     margin-bottom: 8px;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 0.4s;
@@ -71,38 +85,60 @@
     text-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
 }
 
+@media (min-width: 768px) {
+    .title {
+        letter-spacing: 0.1em;
+    }
+}
+
 .subtitle {
     font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: clamp(1rem, 2.5vw, 1.75rem);
     font-weight: 400;
     color: var(--color-accent);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 0.6s;
     opacity: 0;
 }
 
+@media (min-width: 768px) {
+    .subtitle {
+        letter-spacing: 0.15em;
+        margin-bottom: 24px;
+    }
+}
+
 .description {
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.8);
     max-width: 600px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
+    margin: 0 auto 30px;
+    line-height: 1.6;
     text-align: center;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 0.8s;
     opacity: 0;
+    padding: 0 10px;
+}
+
+@media (min-width: 768px) {
+    .description {
+        font-size: 1.125rem;
+        margin-bottom: 40px;
+        line-height: 1.7;
+    }
 }
 
 .buttons {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 1s;
     opacity: 0;
@@ -111,22 +147,29 @@
 @media (min-width: 480px) {
     .buttons {
         flex-direction: row;
+        gap: 16px;
+        margin-bottom: 60px;
     }
 }
 
 .features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 1.2s;
     opacity: 0;
+    width: 100%;
+    max-width: 400px;
 }
 
 @media (min-width: 768px) {
     .features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 48px;
+        max-width: none;
     }
 }
 
@@ -134,7 +177,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .feature {
+        gap: 12px;
+    }
 }
 
 .featureIcon {
@@ -143,29 +192,42 @@
 }
 
 .featureText {
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
 }
 
-/* Scroll indicator - truly centered using left:0, right:0, margin:auto */
+@media (min-width: 768px) {
+    .featureText {
+        font-size: 0.875rem;
+        letter-spacing: 0.1em;
+    }
+}
+
+/* Scroll indicator - hidden on mobile to avoid overlap */
 .scrollIndicator {
-    position: absolute;
-    bottom: 40px;
-    left: 0;
-    right: 0;
-    width: fit-content;
-    margin: 0 auto;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 1.4s;
-    opacity: 0;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .scrollIndicator {
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+        width: fit-content;
+        margin: 0 auto;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: 1.4s;
+        opacity: 0;
+    }
 }
 
 .scrollIndicator span {
