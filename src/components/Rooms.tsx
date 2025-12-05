@@ -24,7 +24,7 @@ const defaultRooms = [
         capacity: '2 гостя',
         price: '15 000',
         features: 'Двуспальная кровать,Wi-Fi,ТВ,Мини-холодильник',
-        image: '/images/room-standard.jpg',
+        image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop',
         badge: '',
     },
     {
@@ -34,7 +34,7 @@ const defaultRooms = [
         capacity: '2-3 гостя',
         price: '25 000',
         features: 'Кондиционер,Мини-кухня,Балкон,Сейф',
-        image: '/images/room-comfort.jpg',
+        image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop',
         badge: 'popular',
     },
     {
@@ -44,7 +44,7 @@ const defaultRooms = [
         capacity: '4-6 гостей',
         price: '45 000',
         features: '2 спальни,Гостиная,Кухня,Терраса',
-        image: '/images/cottage-lake.jpg',
+        image: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&h=600&fit=crop',
         badge: '',
     },
     {
@@ -54,7 +54,7 @@ const defaultRooms = [
         capacity: '6-8 гостей',
         price: '85 000',
         features: '3 спальни,Сауна,Бассейн,Камин',
-        image: '/images/cottage-vip.jpg',
+        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop',
         badge: 'premium',
     },
 ];
