@@ -17,7 +17,8 @@
 }
 
 .info {
-    max-width: 500px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .description {
@@ -25,6 +26,60 @@
     color: var(--color-text-secondary);
     margin-bottom: 32px;
     line-height: 1.7;
+}
+
+/* WhatsApp Buttons */
+.whatsappButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.whatsappBtn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #25D366;
+    color: white;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+}
+
+.whatsappBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: #20bd5a;
+}
+
+.whatsappBtn svg {
+    flex-shrink: 0;
+}
+
+.whatsappBtnAccent {
+    background: var(--gradient-gold);
+    color: var(--color-primary-dark);
+}
+
+.whatsappBtnAccent:hover {
+    background: var(--color-accent-dark);
+    color: var(--color-primary-dark);
+}
+
+.btnTitle {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.btnSubtitle {
+    display: block;
+    font-size: 0.875rem;
+    opacity: 0.9;
 }
 
 .contactList {

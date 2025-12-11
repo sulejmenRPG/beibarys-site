@@ -11,7 +11,6 @@ import {
     Home,
     UtensilsCrossed,
     Users,
-    Music,
     Monitor,
     Gamepad2,
     Zap,
@@ -36,7 +35,6 @@ const iconMap: { [key: string]: LucideIcon } = {
     Home,
     UtensilsCrossed,
     Users,
-    Music,
     Monitor,
     Gamepad2,
     Zap,
@@ -128,7 +126,8 @@ export default function Services() {
 
                 {/* Активности круглый год */}
                 <div className={styles.categoryHeader}>
-                    <h3 className={styles.categoryTitle}>🎯 Активности круглый год</h3>
+                    <Target size={24} className={styles.categoryIcon} />
+                    <h3 className={styles.categoryTitle}>Активности круглый год</h3>
                 </div>
                 <div className={styles.grid}>
                     {activities.map((service, index) => {
