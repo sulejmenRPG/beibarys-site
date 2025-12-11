@@ -247,3 +247,30 @@
     background: var(--color-primary);
     transform: scale(1.2);
 }
+
+/* 2GIS Link */
+.moreLink {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.gisLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--color-bg-card);
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-primary);
+    transition: all var(--transition-base);
+}
+
+.gisLink:hover {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+}

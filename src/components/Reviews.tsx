@@ -2,71 +2,73 @@
 
 import { useState } from 'react';
 import styles from './Reviews.module.css';
+import { ExternalLink } from 'lucide-react';
 
 interface Review {
     id: string;
     name: string;
-    date: string;
     rating: number;
     text: string;
 }
 
-interface ReviewsProps {
-    reviews?: Review[];
-}
-
-const defaultReviews = [
+const reviews: Review[] = [
     {
         id: '1',
-        name: 'Алия М.',
-        date: 'Ноябрь 2024',
+        name: 'Дастан Кузербаев',
         rating: 5,
-        text: 'Провели корпоратив на 50 человек. Всё было на высшем уровне! Вкусная кухня, отличный сервис, дети в восторге от бассейна и активностей. Обязательно вернёмся!',
+        text: 'Отдыхали с семьей, все понравилось, вежливый персонал, в номерах чисто и уютно, бассейн большой и теплый. Придем еще.',
     },
     {
         id: '2',
-        name: 'Ержан К.',
-        date: 'Октябрь 2024',
+        name: 'Мереке Касенов',
         rating: 5,
-        text: 'Снимали VIP-коттедж на выходные всей семьёй. Сауна, бассейн, мангал — всё что нужно для отдыха. Территория ухоженная, персонал очень приветливый.',
+        text: 'Приехали отдохнуть в это прекрасное место. Персонал очень внимательный! В комнатах тепло, уютно, территория обустроенная, бассейн и бани так и манят. Все на высшем уровне! И такая тишина природа, хотя город рядом. Готовят очень вкусно, сытно, разнообразие блюд.',
     },
     {
         id: '3',
-        name: 'Динара С.',
-        date: 'Сентябрь 2024',
+        name: 'Руслан Шамкенов',
         rating: 5,
-        text: 'Отмечали свадьбу в банкетном зале. Красивое оформление, отличный звук, вкусное меню. Гости до сих пор вспоминают!',
+        text: 'Турнир "Жирный Гусь" успешно состоялся! Хочу выразить огромную благодарность всем, кто принял участие, поддержал, приехал и сделал этот день по-настоящему ярким! Ваш азарт, спортивный дух и хорошее настроение создали неповторимую атмосферу праздника!',
     },
     {
         id: '4',
-        name: 'Нурлан Б.',
-        date: 'Август 2024',
-        rating: 4,
-        text: 'Взяли беседку на день рождения. Стрельба из лука и бампербол — это что-то! Рекомендую для активного отдыха с друзьями.',
+        name: 'Асылбек Даулетжанов',
+        rating: 5,
+        text: 'Сегодня заехали с семьей на денек, посетили крытый бассейн, сауну и хаммам. Все классно, хороший сервис. А завершили день в ресторане, кухня очень вкусная, атмосфера уютная, персонал вежливый и доброжелательный! Очень понравилось все, приедем еще много раз!',
     },
     {
         id: '5',
-        name: 'Айгуль Т.',
-        date: 'Июль 2024',
+        name: 'Зауре Тулепбергенова',
         rating: 5,
-        text: 'Идеальное место для семейного отдыха. Дети купались в бассейне, мы отдыхали в беседке. Чисто, уютно, еда вкусная.',
+        text: 'Спасибо большое, всё супер. Отличная кухня, обслуживание на высоте! Рекомендую.',
+    },
+    {
+        id: '6',
+        name: 'Бауржан Мусин',
+        rating: 5,
+        text: 'Сегодня принимал участие в соревновании по стендовой стрельбе. Организация на высшем уровне, атмосфера всего комплекса супер. Кухня вкусная. Одним словом всем советую!',
+    },
+    {
+        id: '7',
+        name: 'Асемгуль Жанбуршина',
+        rating: 5,
+        text: 'Кухня приятно удивила, шеф повар Маруф очень профессиональный. Салат сельдь под шубой был чудесный. Новинка — блюдо с курицей, рататуй под сырной корочкой интересное и сытное блюдо. Официанты и обслуживание также на отличном уровне. Большое спасибо руководству и коллективу Бейбарыс.',
     },
 ];
 
-export default function Reviews({ reviews }: ReviewsProps) {
-    const data = reviews || defaultReviews;
+export default function Reviews() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const visibleReviews = 3;
 
     const nextSlide = () => {
         setCurrentIndex((prev) =>
-            prev + 1 >= data.length - visibleReviews + 1 ? 0 : prev + 1
+            prev + 1 >= reviews.length - visibleReviews + 1 ? 0 : prev + 1
         );
     };
 
     const prevSlide = () => {
         setCurrentIndex((prev) =>
-            prev - 1 < 0 ? data.length - visibleReviews : prev - 1
+            prev - 1 < 0 ? reviews.length - visibleReviews : prev - 1
         );
     };
 
@@ -78,7 +80,7 @@ export default function Reviews({ reviews }: ReviewsProps) {
                         <span className="section-label">Отзывы</span>
                         <h2 className="section-title">Что говорят гости</h2>
                         <p className="section-subtitle">
-                            Реальные отзывы наших посетителей
+                            Рейтинг 4.7 на основе 1000+ отзывов в 2ГИС
                         </p>
                     </div>
                     <div className={styles.controls}>
@@ -96,7 +98,7 @@ export default function Reviews({ reviews }: ReviewsProps) {
                         className={styles.track}
                         style={{ transform: `translateX(-${currentIndex * (100 / visibleReviews)}%)` }}
                     >
-                        {data.map((review) => (
+                        {reviews.map((review) => (
                             <div key={review.id} className={styles.card}>
                                 <div className={styles.stars}>
                                     {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
@@ -108,7 +110,7 @@ export default function Reviews({ reviews }: ReviewsProps) {
                                     </div>
                                     <div>
                                         <span className={styles.name}>{review.name}</span>
-                                        <span className={styles.date}>{review.date}</span>
+                                        <span className={styles.date}>2ГИС</span>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +119,7 @@ export default function Reviews({ reviews }: ReviewsProps) {
                 </div>
 
                 <div className={styles.dots}>
-                    {data.slice(0, data.length - visibleReviews + 1).map((_, index) => (
+                    {reviews.slice(0, reviews.length - visibleReviews + 1).map((_, index) => (
                         <button
                             key={index}
                             className={`${styles.dot} ${index === currentIndex ? styles.dotActive : ''}`}
@@ -125,6 +127,18 @@ export default function Reviews({ reviews }: ReviewsProps) {
                             aria-label={`Отзыв ${index + 1}`}
                         />
                     ))}
+                </div>
+
+                <div className={styles.moreLink}>
+                    <a
+                        href="https://2gis.kz/nur_sultan/firm/70000001032462175?m=71.766869%2C51.086376%2F16"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.gisLink}
+                    >
+                        <span>Все отзывы на 2ГИС</span>
+                        <ExternalLink size={18} />
+                    </a>
                 </div>
             </div>
         </section>
