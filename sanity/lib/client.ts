@@ -1,19 +1,20 @@
 import { createClient } from 'next-sanity';
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+// Hardcoded fallback for Vercel deployment
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'bmh1cmkr';
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01';
 
 export const client = createClient({
-    projectId,
-    dataset,
-    apiVersion,
-    useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: true,
 });
 
 // Fetch functions for each content type
 export async function getServices() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "service"] | order(order asc) {
       _id,
       title,
@@ -25,7 +26,7 @@ export async function getServices() {
 }
 
 export async function getRooms() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "room"] | order(order asc) {
       _id,
       name,
@@ -41,7 +42,7 @@ export async function getRooms() {
 }
 
 export async function getPricing() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "pricing"] | order(order asc) {
       _id,
       category,
@@ -55,7 +56,7 @@ export async function getPricing() {
 }
 
 export async function getMenu() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "menuCategory"] | order(order asc) {
       _id,
       name,
@@ -69,7 +70,7 @@ export async function getMenu() {
 }
 
 export async function getReviews() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "review"] {
       _id,
       name,
@@ -82,7 +83,7 @@ export async function getReviews() {
 }
 
 export async function getSiteSettings() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "siteSettings"][0] {
       siteName,
       tagline,
@@ -101,7 +102,7 @@ export async function getSiteSettings() {
 }
 
 export async function getGalleries() {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "gallery"] | order(order asc) {
       _id,
       title,
@@ -118,7 +119,7 @@ export async function getGalleries() {
 }
 
 export async function getGalleryBySlug(slug: string) {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "gallery" && slug.current == $slug][0] {
       _id,
       title,
