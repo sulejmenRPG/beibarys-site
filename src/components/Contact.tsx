@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from './Contact.module.css';
-import { Phone, MessageCircle, Instagram, MapPin, Clock, Send } from 'lucide-react';
+import { Phone, MessageCircle, Instagram, MapPin, Clock, Send, Navigation } from 'lucide-react';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -28,8 +28,11 @@ export default function Contact() {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Create WhatsApp message
+        const message = `Заявка с сайта BEIBARYS%0A%0AИмя: ${formData.name}%0AТелефон: ${formData.phone}%0AГостей: ${formData.guests}%0AДата: ${formData.date}%0AСообщение: ${formData.message}`;
+
+        // Open WhatsApp with message
+        window.open(`https://wa.me/77001234567?text=${message}`, '_blank');
 
         setIsSubmitting(false);
         setIsSubmitted(true);
@@ -49,7 +52,7 @@ export default function Contact() {
                         <span className="section-label">Контакты</span>
                         <h2 className="section-title">Забронируйте отдых</h2>
                         <p className={styles.description}>
-                            Оставьте заявку и наш менеджер свяжется с вами в течение 15 минут
+                            Мы находимся в 30 минутах от Астаны. Оставьте заявку и наш менеджер свяжется с вами в течение 15 минут.
                         </p>
 
                         <div className={styles.contactList}>
@@ -63,7 +66,7 @@ export default function Contact() {
                                 </div>
                             </a>
 
-                            <a href="https://wa.me/77001234567" className={styles.contactItem}>
+                            <a href="https://wa.me/77001234567" className={styles.contactItem} target="_blank" rel="noopener noreferrer">
                                 <div className={styles.contactIcon}>
                                     <MessageCircle size={20} />
                                 </div>
@@ -73,7 +76,7 @@ export default function Contact() {
                                 </div>
                             </a>
 
-                            <a href="https://instagram.com/beibarys.resort" className={styles.contactItem}>
+                            <a href="https://instagram.com/beibarys.resort" className={styles.contactItem} target="_blank" rel="noopener noreferrer">
                                 <div className={styles.contactIcon}>
                                     <Instagram size={20} />
                                 </div>
@@ -83,17 +86,32 @@ export default function Contact() {
                                 </div>
                             </a>
 
-                            <div className={styles.contactItem}>
+                            <a href="https://2gis.kz/astana/search/beibarys" className={styles.contactItem} target="_blank" rel="noopener noreferrer">
                                 <div className={styles.contactIcon}>
                                     <MapPin size={20} />
                                 </div>
                                 <div>
                                     <span className={styles.contactLabel}>Адрес</span>
                                     <span className={styles.contactValue}>
-                                        с. Жибек Жолы, Акмолинская область
+                                        пос. Жибек-жолы, ул. Кенес, 7
                                     </span>
                                 </div>
-                            </div>
+                            </a>
+
+                            <a
+                                href="https://2gis.kz/astana/search/beibarys"
+                                className={styles.contactItem}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <div className={styles.contactIcon}>
+                                    <Navigation size={20} />
+                                </div>
+                                <div>
+                                    <span className={styles.contactLabel}>2ГИС</span>
+                                    <span className={styles.contactValue}>Мы есть в 2ГИС</span>
+                                </div>
+                            </a>
                         </div>
 
                         <div className={styles.workHours}>
@@ -155,7 +173,9 @@ export default function Contact() {
                                             <option value="1-5">1-5 человек</option>
                                             <option value="6-15">6-15 человек</option>
                                             <option value="16-30">16-30 человек</option>
-                                            <option value="30+">Более 30 человек</option>
+                                            <option value="30-50">30-50 человек</option>
+                                            <option value="50-100">50-100 человек</option>
+                                            <option value="100+">Более 100 человек</option>
                                         </select>
                                     </div>
                                     <div className={styles.formGroup}>
@@ -206,16 +226,17 @@ export default function Contact() {
                     </form>
                 </div>
 
+                {/* Google Maps - пос. Жибек-жолы, Акмолинская область */}
                 <div className={styles.map}>
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2496.123456789!2d71.431!3d51.131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDA3JzUxLjYiTiA3McKwMjUnNTEuNiJF!5e0!3m2!1sru!2skz!4v1234567890"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2502.5!2d71.47!3d51.24!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585a605525555%3A0x0!2zNTHCsDE0JzI0LjAiTiA3McKwMjgnMTIuMCJF!5e0!3m2!1sru!2skz!4v1702000000000"
                         width="100%"
                         height="400"
                         style={{ border: 0, borderRadius: 'var(--radius-lg)' }}
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title="Местоположение Beibarys"
+                        title="Местоположение BEIBARYS - пос. Жибек-жолы, ул. Кенес, 7"
                     />
                 </div>
             </div>
