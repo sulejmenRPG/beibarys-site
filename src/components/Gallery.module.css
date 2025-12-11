@@ -162,19 +162,22 @@
     background: var(--color-primary);
 }
 
-/* Video Modal - Fixed overlay */
+/* Video Modal - Fixed overlay covering everything */
 .modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 99999;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.98);
+    z-index: 999999 !important;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    margin: 0 !important;
 }
 
 .closeBtn {
@@ -191,7 +194,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100000;
+    z-index: 9999999 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s;
 }
