@@ -225,7 +225,7 @@
 }
 
 .modalContent {
-    max-width: 100%;
+    max-width: 90vw;
     max-height: 90vh;
     display: flex;
     align-items: center;
@@ -233,8 +233,18 @@
 }
 
 .modalVideo {
-    max-width: 100%;
-    max-height: 85vh;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
     border-radius: var(--radius-lg);
     background: black;
+}
+
+/* For vertical 9:16 videos */
+@media (min-width: 768px) {
+    .modalVideo {
+        max-width: min(50vw, 500px);
+        max-height: 90vh;
+    }
 }
