@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styles from './Gallery.module.css';
 import { ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 import Image from 'next/image';
@@ -22,6 +22,19 @@ interface GalleryProps {
 export default function Gallery({ id, title, subtitle, label, items }: GalleryProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+    // Close modal on ESC key
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                closeVideo();
+            }
+        };
+        if (activeVideo) {
+            window.addEventListener('keydown', handleEsc);
+            return () => window.removeEventListener('keydown', handleEsc);
+        }
+    }, [activeVideo]);
 
     const scroll = (direction: 'left' | 'right') => {
         if (scrollRef.current) {
