@@ -89,7 +89,9 @@ const springFallActivities = [
 
 // Летние развлечения
 const summerActivities = [
-    { id: 's1', title: 'Открытый бассейн', description: 'Большой бассейн с подогревом', icon: 'Sun' },
+    { id: 's1', title: 'Открытый бассейн', description: 'С подогревом воды', icon: 'Sun' },
+    { id: 's2', title: 'Шезлонги и зона отдыха', description: 'У воды', icon: 'Sun' },
+    { id: 's3', title: 'Барбекю на природе', description: 'В беседках', icon: 'Flame' },
 ];
 
 export default function Services() {

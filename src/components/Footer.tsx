@@ -1,5 +1,5 @@
 import styles from './Footer.module.css';
-import { Instagram, Music2, MessageCircle } from 'lucide-react';
+import { Instagram, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
     return (
@@ -18,13 +18,10 @@ export default function Footer() {
                             Зона отдыха для тех, кто ценит комфорт, качество и незабываемые впечатления.
                         </p>
                         <div className={styles.social}>
-                            <a href="https://instagram.com/beibarys.resort" className={styles.socialLink} aria-label="Instagram">
+                            <a href="https://instagram.com/beibarys.comfort" className={styles.socialLink} aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                                 <Instagram size={20} />
                             </a>
-                            <a href="https://tiktok.com/@beibarys.resort" className={styles.socialLink} aria-label="TikTok">
-                                <Music2 size={20} />
-                            </a>
-                            <a href="https://wa.me/77001234567" className={styles.socialLink} aria-label="WhatsApp">
+                            <a href="https://wa.me/77777755577" className={styles.socialLink} aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
                                 <MessageCircle size={20} />
                             </a>
                         </div>
@@ -42,25 +39,19 @@ export default function Footer() {
                             <h4>Информация</h4>
                             <a href="#pricing">Прайс-лист</a>
                             <a href="#reviews">Отзывы</a>
-                            <a href="#rules">Правила</a>
-                            <a href="#offer">Договор оферты</a>
+                            <a href="https://2gis.kz/nur_sultan/firm/70000001032462175" target="_blank" rel="noopener noreferrer">2ГИС</a>
                         </div>
                         <div className={styles.column}>
-                            <h4>Контакты</h4>
-                            <a href="tel:+77001234567">+7 700 123 45 67</a>
-                            <a href="mailto:info@beibarys.kz">info@beibarys.kz</a>
-                            <span>с. Жибек Жолы</span>
+                            <h4>Адрес</h4>
+                            <span>пос. Жибек Жолы</span>
+                            <span>ул. Кенес, 7</span>
                             <span>Акмолинская область</span>
                         </div>
                     </div>
                 </div>
 
                 <div className={styles.bottom}>
-                    <p>© 2024 BEIBARYS. Все права защищены.</p>
-                    <div className={styles.legal}>
-                        <a href="#offer">Договор оферты</a>
-                        <a href="#privacy">Политика конфиденциальности</a>
-                    </div>
+                    <p>© 2025 BEIBARYS. Все права защищены.</p>
                 </div>
             </div>
         </footer>

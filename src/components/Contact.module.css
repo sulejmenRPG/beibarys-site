@@ -41,7 +41,7 @@
     align-items: center;
     gap: 16px;
     padding: 20px 24px;
-    background: #25D366;
+    background: var(--color-primary);
     color: white;
     border-radius: var(--radius-lg);
     text-decoration: none;
@@ -52,7 +52,7 @@
 .whatsappBtn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
-    background: #20bd5a;
+    background: var(--color-primary-dark);
 }
 
 .whatsappBtn svg {
