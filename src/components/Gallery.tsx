@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import styles from './Gallery.module.css';
 import { ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 import Image from 'next/image';
@@ -23,6 +23,14 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
     const scrollRef = useRef<HTMLDivElement>(null);
     const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
+    const closeVideo = useCallback(() => {
+        setActiveVideo(null);
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+    }, []);
+
     // Close modal on ESC key
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -34,7 +42,7 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
             window.addEventListener('keydown', handleEsc);
             return () => window.removeEventListener('keydown', handleEsc);
         }
-    }, [activeVideo]);
+    }, [activeVideo, closeVideo]);
 
     const scroll = (direction: 'left' | 'right') => {
         if (scrollRef.current) {
@@ -47,13 +55,28 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
     };
 
     const openVideo = (videoUrl: string) => {
-        setActiveVideo(videoUrl);
+        // Save scroll position and lock body
+        const scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
+        setActiveVideo(videoUrl);
     };
 
-    const closeVideo = () => {
-        setActiveVideo(null);
-        document.body.style.overflow = '';
+    const handleCloseClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Restore scroll position
+        const scrollY = document.body.style.top;
+        closeVideo();
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    };
+
+    const handleBackdropClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            handleCloseClick(e);
+        }
     };
 
     return (
@@ -129,15 +152,21 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
 
             {/* Video Modal */}
             {activeVideo && (
-                <div className={styles.modal} onClick={closeVideo}>
-                    <button className={styles.closeBtn} onClick={closeVideo}>
+                <div className={styles.modal} onClick={handleBackdropClick}>
+                    <button
+                        className={styles.closeBtn}
+                        onClick={handleCloseClick}
+                        type="button"
+                        aria-label="Закрыть"
+                    >
                         <X size={32} />
                     </button>
-                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                    <div className={styles.modalContent}>
                         <video
                             src={activeVideo}
                             controls
                             autoPlay
+                            playsInline
                             className={styles.modalVideo}
                         />
                     </div>
