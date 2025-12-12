@@ -1,8 +1,10 @@
+'use client';
+
+import { useState } from 'react';
 import styles from './Menu.module.css';
 
 interface MenuItem {
     name: string;
-    description: string;
     price: string;
 }
 
@@ -11,50 +13,108 @@ interface MenuCategory {
     items: MenuItem[];
 }
 
-interface MenuProps {
-    menu?: MenuCategory[];
-}
-
-const defaultMenu = [
+// Основное меню
+const foodMenu: MenuCategory[] = [
     {
-        name: 'Закуски',
+        name: 'Завтраки',
         items: [
-            { name: 'Ассорти мясное', description: 'Казы, шужук, жая', price: '4 500 ₸' },
-            { name: 'Овощная тарелка', description: 'Свежие овощи с зеленью', price: '2 500 ₸' },
-            { name: 'Сырная тарелка', description: 'Ассорти европейских сыров', price: '4 000 ₸' },
+            { name: 'Завтрак «Beibarys»', price: '3 400' },
+            { name: 'Яичница с ветчиной и сыром', price: '3 200' },
+            { name: 'Блинчики домашние', price: '1 700' },
+            { name: 'Каша рисовая/овсяная', price: '1 500' },
         ]
     },
     {
-        name: 'Горячее',
+        name: 'Горячие блюда',
         items: [
-            { name: 'Бешбармак', description: 'Традиционное казахское блюдо', price: '5 500 ₸' },
-            { name: 'Шашлык из баранины', description: 'Порция 200г', price: '3 500 ₸' },
-            { name: 'Плов по-узбекски', description: 'С бараниной', price: '3 000 ₸' },
-            { name: 'Куырдак', description: 'Из телятины', price: '4 000 ₸' },
-            { name: 'Стейк рибай', description: '300г, медиум', price: '8 500 ₸' },
+            { name: 'Лосось на Шабе', price: '7 000' },
+            { name: 'Бараньи котлеты + картофель', price: '5 200' },
+            { name: 'Ассорти на мангале', price: '9 200' },
+            { name: 'Стейк из мраморной говядины', price: '6 400' },
+        ]
+    },
+    {
+        name: 'Салаты',
+        items: [
+            { name: 'Салат «Beibarys»', price: '4 900' },
+            { name: 'Мимо-салат с крабом', price: '5 500' },
+            { name: 'Оливье уйгурский', price: '4 200' },
+            { name: 'Цезарь с курицей', price: '3 900' },
         ]
     },
     {
         name: 'Супы',
         items: [
-            { name: 'Сорпа', description: 'Бульон с мясом', price: '2 000 ₸' },
-            { name: 'Лагман', description: 'Домашняя лапша', price: '2 500 ₸' },
-            { name: 'Шурпа', description: 'С бараниной', price: '2 500 ₸' },
+            { name: 'Шурпа', price: '4 700' },
+            { name: 'Сорпа из баранины', price: '3 100' },
+            { name: 'Солянка', price: '3 200' },
+            { name: 'Лагман', price: '2 600' },
         ]
     },
     {
-        name: 'Напитки',
+        name: 'Мангал',
         items: [
-            { name: 'Кумыс', description: '0.5л', price: '800 ₸' },
-            { name: 'Шубат', description: '0.5л', price: '700 ₸' },
-            { name: 'Чай казахский', description: 'Чайник', price: '500 ₸' },
-            { name: 'Компот домашний', description: '1л', price: '600 ₸' },
+            { name: 'Шашлык из баранины', price: '4 900' },
+            { name: 'Шашлык из говядины', price: '5 100' },
+            { name: 'Шашлык куриный', price: '4 500' },
+            { name: 'Кебаб', price: '3 200' },
+        ]
+    },
+    {
+        name: 'Восточная кухня',
+        items: [
+            { name: 'Казан-кебаб', price: '4 200' },
+            { name: 'Тальтики', price: '3 000' },
+            { name: 'Лагман на домашней лапше', price: '3 500' },
+            { name: 'Димлама', price: '5 000' },
         ]
     },
 ];
 
-export default function Menu({ menu }: MenuProps) {
-    const data = menu || defaultMenu;
+// Барное меню
+const barMenu: MenuCategory[] = [
+    {
+        name: 'Напитки',
+        items: [
+            { name: 'Домашний лимонад', price: '3 000' },
+            { name: 'Coca-Cola 0.33л', price: '800' },
+            { name: 'Сок Gracio 0.2л', price: '700' },
+            { name: 'Вода Turan 0.5л', price: '800' },
+        ]
+    },
+    {
+        name: 'Кофе',
+        items: [
+            { name: 'Эспрессо', price: '1 300' },
+            { name: 'Американо', price: '1 500' },
+            { name: 'Латте', price: '1 800' },
+            { name: 'Капучино', price: '1 600' },
+        ]
+    },
+    {
+        name: 'Чай',
+        items: [
+            { name: 'Сенча', price: '2 250' },
+            { name: 'Ташкентский чай', price: '2 250' },
+            { name: 'Ягодный закат', price: '2 250' },
+        ]
+    },
+    {
+        name: 'Алкоголь',
+        items: [
+            { name: 'Водка (50г)', price: 'от 1 300' },
+            { name: 'Виски (50г)', price: 'от 2 500' },
+            { name: 'Коньяк (50г)', price: 'от 4 600' },
+            { name: 'Пиво 0.5л', price: 'от 2 400' },
+        ]
+    },
+];
+
+type MenuTab = 'food' | 'bar';
+
+export default function Menu() {
+    const [activeTab, setActiveTab] = useState<MenuTab>('food');
+    const data = activeTab === 'food' ? foodMenu : barMenu;
 
     return (
         <section id="menu" className={`section ${styles.menu}`}>
@@ -63,8 +123,24 @@ export default function Menu({ menu }: MenuProps) {
                     <span className="section-label">Ресторан</span>
                     <h2 className="section-title">Наше меню</h2>
                     <p className="section-subtitle">
-                        Блюда казахской и европейской кухни из свежих продуктов
+                        Блюда казахской и европейской кухни
                     </p>
+                </div>
+
+                {/* Tabs */}
+                <div className={styles.tabs}>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'food' ? styles.active : ''}`}
+                        onClick={() => setActiveTab('food')}
+                    >
+                        Основное меню
+                    </button>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'bar' ? styles.active : ''}`}
+                        onClick={() => setActiveTab('bar')}
+                    >
+                        Бар
+                    </button>
                 </div>
 
                 <div className={styles.grid}>
@@ -74,11 +150,8 @@ export default function Menu({ menu }: MenuProps) {
                             <div className={styles.items}>
                                 {category.items.map((item, itemIndex) => (
                                     <div key={itemIndex} className={styles.item}>
-                                        <div className={styles.itemInfo}>
-                                            <span className={styles.itemName}>{item.name}</span>
-                                            <span className={styles.itemDesc}>{item.description}</span>
-                                        </div>
-                                        <span className={styles.itemPrice}>{item.price}</span>
+                                        <span className={styles.itemName}>{item.name}</span>
+                                        <span className={styles.itemPrice}>{item.price} ₸</span>
                                     </div>
                                 ))}
                             </div>
@@ -87,7 +160,7 @@ export default function Menu({ menu }: MenuProps) {
                 </div>
 
                 <div className={styles.note}>
-                    <p>Полное меню доступно в ресторане. Возможно приготовление для банкетов по индивидуальному заказу.</p>
+                    <p>Также в меню: пицца, паста, бургеры, гарниры, детское меню, блюда на компанию. Для банкетов — меню по индивидуальному заказу.</p>
                 </div>
             </div>
         </section>

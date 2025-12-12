@@ -9,9 +9,24 @@ import Reviews from '@/components/Reviews';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
-import { getGalleries } from '../../sanity/lib/client';
+import { getGalleries, getSiteSettings, getRooms } from '../../sanity/lib/client';
 
-// Default gallery data (fallback if Sanity is empty)
+// Site settings type
+interface SiteSettings {
+  heroImage?: string;
+}
+
+// Room type from Sanity
+interface SanityRoom {
+  _id: string;
+  name: string;
+  description: string;
+  capacity: string;
+  price: string;
+  features: string;
+  badge: string;
+  image?: string;
+}
 const defaultGalleries = {
   activities: {
     label: 'Галерея',
@@ -69,10 +84,17 @@ interface SanityGallery {
 }
 
 export default async function Home() {
-  // Fetch galleries from Sanity
+  // Fetch data from Sanity
   let sanityGalleries: SanityGallery[] = [];
+  let siteSettings: SiteSettings | null = null;
+  let sanityRooms: SanityRoom[] = [];
+
   try {
-    sanityGalleries = await getGalleries();
+    [sanityGalleries, siteSettings, sanityRooms] = await Promise.all([
+      getGalleries(),
+      getSiteSettings(),
+      getRooms(),
+    ]);
   } catch (error) {
     console.log('Sanity fetch failed, using defaults');
   }
@@ -104,7 +126,7 @@ export default async function Home() {
     <>
       <Header />
       <main>
-        <Hero />
+        <Hero heroImage={siteSettings?.heroImage} />
 
         <ScrollReveal>
           <Services />
@@ -121,7 +143,7 @@ export default async function Home() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <Rooms />
+          <Rooms rooms={sanityRooms.length > 0 ? sanityRooms : undefined} />
         </ScrollReveal>
 
         <ScrollReveal>

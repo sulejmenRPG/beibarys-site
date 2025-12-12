@@ -250,3 +250,57 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
+
+/* Rules section */
+.rules {
+    margin-top: 48px;
+    padding: 32px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+}
+
+.rulesTitle {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.rulesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .rulesGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.ruleItem {
+    padding: 16px;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text);
+}
+
+.ruleItem strong {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 4px;
+    font-size: 0.8125rem;
+}
+
+.rulesNote {
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+}

@@ -39,6 +39,8 @@ export default function Footer() {
                             <h4>Информация</h4>
                             <a href="#pricing">Прайс-лист</a>
                             <a href="#reviews">Отзывы</a>
+                            <a href="/offer">Договор-оферта</a>
+                            <a href="/damages">Прейскурант ущерба</a>
                             <a href="https://2gis.kz/nur_sultan/firm/70000001032462175" target="_blank" rel="noopener noreferrer">2ГИС</a>
                         </div>
                         <div className={styles.column}>

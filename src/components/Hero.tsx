@@ -1,14 +1,20 @@
 import styles from './Hero.module.css';
 import { Waves, Home, Target, Utensils, ChevronDown } from 'lucide-react';
 
-export default function Hero() {
+interface HeroProps {
+    heroImage?: string;
+}
+
+export default function Hero({ heroImage }: HeroProps) {
+    const backgroundUrl = heroImage || 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop&q=80';
+
     return (
         <section id="hero" className={styles.hero}>
             {/* Background image */}
             <div
                 className={styles.backgroundImage}
                 style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop&q=80')`
+                    backgroundImage: `url('${backgroundUrl}')`
                 }}
             />
             <div className={styles.overlay}></div>
@@ -24,7 +30,7 @@ export default function Hero() {
                     всего в 30 минутах от центра Астаны
                 </p>
                 <div className={styles.buttons}>
-                    <a href="#booking" className="btn btn-primary">
+                    <a href="#contacts" className="btn btn-primary">
                         Забронировать
                     </a>
                     <a href="#services" className="btn btn-secondary">

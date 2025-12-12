@@ -2,23 +2,67 @@
     background: var(--color-bg-alt);
 }
 
+/* Tabs */
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 40px;
+}
+
+.tab {
+    padding: 10px 24px;
+    border: 2px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab:hover {
+    background: rgba(27, 67, 50, 0.1);
+}
+
+.tab.active {
+    background: var(--color-primary);
+    color: white;
+}
+
 .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 16px;
+}
+
+.grid>* {
+    flex: 0 0 calc(50% - 8px);
+    max-width: calc(50% - 8px);
 }
 
 @media (min-width: 768px) {
     .grid {
-        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
+    }
+
+    .grid>* {
+        flex: 0 0 calc(33.333% - 14px);
+        max-width: calc(33.333% - 14px);
     }
 }
 
 @media (min-width: 1024px) {
     .grid {
-        grid-template-columns: repeat(5, 1fr);
         gap: 20px;
+    }
+
+    .grid>* {
+        flex: 0 0 calc(20% - 16px);
+        max-width: calc(20% - 16px);
     }
 }
 

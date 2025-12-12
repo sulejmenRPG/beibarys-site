@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './Gallery.module.css';
 import { ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 import Image from 'next/image';
@@ -19,30 +20,156 @@ interface GalleryProps {
     items: GalleryItem[];
 }
 
-export default function Gallery({ id, title, subtitle, label, items }: GalleryProps) {
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const [activeVideo, setActiveVideo] = useState<string | null>(null);
+// Modal Component with navigation and swipe (supports both videos and images)
+function MediaModal({
+    items,
+    currentIndex,
+    onClose,
+    onPrev,
+    onNext,
+}: {
+    items: GalleryItem[];
+    currentIndex: number;
+    onClose: () => void;
+    onPrev: () => void;
+    onNext: () => void;
+}) {
+    const currentItem = items[currentIndex];
+    const hasMultiple = items.length > 1;
+    const touchStartX = useRef<number>(0);
+    const touchEndX = useRef<number>(0);
 
-    const closeVideo = useCallback(() => {
-        setActiveVideo(null);
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-    }, []);
-
-    // Close modal on ESC key
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                closeVideo();
-            }
+            if (e.key === 'Escape') onClose();
+            if (e.key === 'ArrowLeft') onPrev();
+            if (e.key === 'ArrowRight') onNext();
         };
-        if (activeVideo) {
-            window.addEventListener('keydown', handleEsc);
-            return () => window.removeEventListener('keydown', handleEsc);
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [onClose, onPrev, onNext]);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        const diff = touchStartX.current - touchEndX.current;
+        const threshold = 50;
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                onNext();
+            } else {
+                onPrev();
+            }
         }
-    }, [activeVideo, closeVideo]);
+    };
+
+    const handleBackdropClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
+    return createPortal(
+        <div
+            className={styles.modal}
+            onClick={handleBackdropClick}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
+            {/* Close button */}
+            <button
+                className={styles.closeBtn}
+                onClick={(e) => { e.stopPropagation(); onClose(); }}
+                type="button"
+                aria-label="Закрыть"
+            >
+                <X size={32} />
+            </button>
+
+            {/* Previous button */}
+            {hasMultiple && (
+                <button
+                    className={`${styles.navBtn} ${styles.navBtnPrev}`}
+                    onClick={(e) => { e.stopPropagation(); onPrev(); }}
+                    type="button"
+                    aria-label="Предыдущее"
+                >
+                    <ChevronLeft size={32} />
+                </button>
+            )}
+
+            {/* Content - Video or Image */}
+            <div className={styles.modalContent}>
+                {currentItem.video ? (
+                    <video
+                        key={currentItem.video}
+                        src={currentItem.video}
+                        controls
+                        autoPlay
+                        playsInline
+                        className={styles.modalVideo}
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                ) : currentItem.image ? (
+                    <img
+                        key={currentItem.image}
+                        src={currentItem.image}
+                        alt={currentItem.title || 'Gallery image'}
+                        className={styles.modalImage}
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                ) : null}
+            </div>
+
+            {/* Next button */}
+            {hasMultiple && (
+                <button
+                    className={`${styles.navBtn} ${styles.navBtnNext}`}
+                    onClick={(e) => { e.stopPropagation(); onNext(); }}
+                    type="button"
+                    aria-label="Следующее"
+                >
+                    <ChevronRight size={32} />
+                </button>
+            )}
+
+            {/* Counter */}
+            {hasMultiple && (
+                <div className={styles.counter}>
+                    {currentIndex + 1} / {items.length}
+                </div>
+            )}
+        </div>,
+        document.body
+    );
+}
+
+export default function Gallery({ id, title, subtitle, label, items }: GalleryProps) {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (activeIndex !== null) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [activeIndex]);
 
     const scroll = (direction: 'left' | 'right') => {
         if (scrollRef.current) {
@@ -54,30 +181,25 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
         }
     };
 
-    const openVideo = (videoUrl: string) => {
-        // Save scroll position and lock body
-        const scrollY = window.scrollY;
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
-        document.body.style.overflow = 'hidden';
-        setActiveVideo(videoUrl);
+    const openItem = (index: number) => {
+        setActiveIndex(index);
     };
 
-    const handleCloseClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        // Restore scroll position
-        const scrollY = document.body.style.top;
-        closeVideo();
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    };
+    const closeModal = useCallback(() => {
+        setActiveIndex(null);
+    }, []);
 
-    const handleBackdropClick = (e: React.MouseEvent) => {
-        if (e.target === e.currentTarget) {
-            handleCloseClick(e);
-        }
-    };
+    const prevItem = useCallback(() => {
+        setActiveIndex((prev) =>
+            prev !== null ? (prev - 1 + items.length) % items.length : 0
+        );
+    }, [items.length]);
+
+    const nextItem = useCallback(() => {
+        setActiveIndex((prev) =>
+            prev !== null ? (prev + 1) % items.length : 0
+        );
+    }, [items.length]);
 
     return (
         <>
@@ -113,7 +235,7 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
                                 key={index}
                                 className={styles.item}
                                 style={{ animationDelay: `${index * 0.1}s` }}
-                                onClick={() => item.video && openVideo(item.video)}
+                                onClick={() => openItem(index)}
                             >
                                 <div className={styles.imageWrapper}>
                                     {item.video ? (
@@ -141,36 +263,26 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
                                         <Play size={24} fill="currentColor" />
                                     </div>
                                 )}
-                                <div className={styles.overlay}>
-                                    <h3 className={styles.itemTitle}>{item.title}</h3>
-                                </div>
+                                {item.title && !/^\d+$/.test(item.title) && (
+                                    <div className={styles.overlay}>
+                                        <h3 className={styles.itemTitle}>{item.title}</h3>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Video Modal */}
-            {activeVideo && (
-                <div className={styles.modal} onClick={handleBackdropClick}>
-                    <button
-                        className={styles.closeBtn}
-                        onClick={handleCloseClick}
-                        type="button"
-                        aria-label="Закрыть"
-                    >
-                        <X size={32} />
-                    </button>
-                    <div className={styles.modalContent}>
-                        <video
-                            src={activeVideo}
-                            controls
-                            autoPlay
-                            playsInline
-                            className={styles.modalVideo}
-                        />
-                    </div>
-                </div>
+            {/* Modal via Portal */}
+            {mounted && activeIndex !== null && items.length > 0 && (
+                <MediaModal
+                    items={items}
+                    currentIndex={activeIndex}
+                    onClose={closeModal}
+                    onPrev={prevItem}
+                    onNext={nextItem}
+                />
             )}
         </>
     );

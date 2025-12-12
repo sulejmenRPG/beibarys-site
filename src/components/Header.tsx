@@ -1,21 +1,26 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './Header.module.css';
 
 const navLinks = [
-    { name: 'Главная', href: '#hero' },
-    { name: 'Услуги', href: '#services' },
-    { name: 'Размещение', href: '#rooms' },
-    { name: 'Прайс', href: '#pricing' },
-    { name: 'Меню', href: '#menu' },
-    { name: 'Отзывы', href: '#reviews' },
-    { name: 'Контакты', href: '#contacts' },
+    { name: 'Главная', href: '/#hero' },
+    { name: 'Услуги', href: '/#services' },
+    { name: 'Размещение', href: '/#rooms' },
+    { name: 'Прайс', href: '/#pricing' },
+    { name: 'Меню', href: '/#menu' },
+    { name: 'Отзывы', href: '/#reviews' },
+    { name: 'Контакты', href: '/#contacts' },
 ];
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
+
+    // На внутренних страницах (offer, damages) всегда показываем scrolled стиль
+    const isInnerPage = pathname !== '/';
 
     useEffect(() => {
         const handleScroll = () => {
@@ -26,10 +31,13 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // На внутренних страницах или при скролле — показываем белый фон
+    const showScrolledStyle = isScrolled || isInnerPage;
+
     return (
-        <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+        <header className={`${styles.header} ${showScrolledStyle ? styles.scrolled : ''}`}>
             <div className={styles.container}>
-                <a href="#hero" className={styles.logo}>
+                <a href="/" className={styles.logo}>
                     <span className={styles.logoIcon}>B</span>
                     <div className={styles.logoText}>
                         <span className={styles.logoName}>BEIBARYS</span>
@@ -50,7 +58,7 @@ export default function Header() {
                     ))}
                 </nav>
 
-                <a href="#booking" className={styles.bookBtn}>
+                <a href="/#booking" className={styles.bookBtn}>
                     Забронировать
                 </a>
 

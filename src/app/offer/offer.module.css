@@ -1,0 +1,141 @@
+.offer {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    background: var(--color-bg);
+    min-height: 100vh;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: 16px;
+}
+
+.meta {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 0.9375rem;
+    margin-bottom: 48px;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+}
+
+.content p {
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: 16px;
+    font-size: 0.9375rem;
+}
+
+.content h2 {
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    color: var(--color-primary);
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.content h3 {
+    font-size: 1.125rem;
+    color: var(--color-text);
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.content ul {
+    margin-bottom: 20px;
+    padding-left: 24px;
+}
+
+.content ul li {
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: 8px;
+    font-size: 0.9375rem;
+}
+
+.content ul li strong {
+    color: var(--color-primary);
+}
+
+.highlight {
+    background: rgba(27, 67, 50, 0.05);
+    border-left: 4px solid var(--color-accent);
+    padding: 24px;
+    margin: 32px 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.highlight h4 {
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.highlight ul {
+    margin-bottom: 0;
+}
+
+.highlight ul li {
+    color: var(--color-text-secondary);
+}
+
+.contacts {
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 32px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.contacts h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.contacts p {
+    color: var(--color-text);
+    margin-bottom: 8px;
+    font-size: 0.9375rem;
+}
+
+@media (max-width: 768px) {
+    .offer {
+        padding-top: 100px;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .content {
+        padding: 24px;
+    }
+
+    .content h2 {
+        font-size: 1.125rem;
+    }
+}

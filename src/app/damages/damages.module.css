@@ -1,0 +1,146 @@
+.damages {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    background: var(--color-bg);
+    min-height: 100vh;
+}
+
+.meta {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+}
+
+.note {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 20px 24px;
+    background: rgba(27, 67, 50, 0.05);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.note p {
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    margin: 0;
+}
+
+.tableSection {
+    margin-bottom: 40px;
+}
+
+.tableTitle {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-bg-card);
+    font-size: 0.875rem;
+}
+
+.table th,
+.table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.table th {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.table tbody tr:hover {
+    background: rgba(27, 67, 50, 0.03);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.category {
+    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+}
+
+.price {
+    font-weight: 600;
+    color: var(--color-primary);
+    white-space: nowrap;
+}
+
+.footer {
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 24px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.footer p {
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.footer p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .damages {
+        padding-top: 100px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px 12px;
+        font-size: 0.8125rem;
+    }
+
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+        display: none;
+    }
+}
