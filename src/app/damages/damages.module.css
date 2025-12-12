@@ -65,7 +65,7 @@
 .table {
     width: 100%;
     border-collapse: collapse;
-    background: var(--color-bg-card);
+    background: #ffffff;
     font-size: 0.875rem;
 }
 
@@ -74,6 +74,7 @@
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    color: #1a1a1a;
 }
 
 .table th {
