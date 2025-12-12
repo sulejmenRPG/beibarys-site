@@ -78,11 +78,15 @@
 .nav {
     display: none;
     gap: 8px;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 @media (min-width: 1024px) {
     .nav {
         display: flex;
+        visibility: visible;
+        pointer-events: auto;
     }
 }
 
@@ -177,6 +181,8 @@
 /* Mobile Menu */
 .navOpen {
     display: flex !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -187,7 +193,7 @@
     justify-content: center;
     gap: 12px;
     background: var(--color-bg);
-    z-index: 999;
+    z-index: 9999;
     animation: fadeIn 0.2s ease;
 }
 

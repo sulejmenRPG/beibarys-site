@@ -35,7 +35,7 @@ export default function Hero({ heroImage }: HeroProps) {
                     всего в 30 минутах от центра Астаны
                 </p>
                 <div className={styles.buttons}>
-                    <a href="/#contacts" className="btn btn-primary">
+                    <a href="/#booking" className="btn btn-primary">
                         Забронировать
                     </a>
                     <a href="/#services" className="btn btn-secondary">
