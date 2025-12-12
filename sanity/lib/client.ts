@@ -9,10 +9,15 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  useCdn: true, // Use CDN for faster reads
 });
 
-// Fetch functions for each content type
+// Cache options for static generation with revalidation
+const cacheOptions = {
+  next: { revalidate: 3600 } // Revalidate every 1 hour
+};
+
+// Fetch functions for each content type with caching
 export async function getServices() {
   return client.fetch(`
     *[_type == "service"] | order(order asc) {
@@ -22,7 +27,7 @@ export async function getServices() {
       icon,
       "image": image.asset->url
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getRooms() {
@@ -38,7 +43,7 @@ export async function getRooms() {
       "image": image.asset->url,
       "gallery": gallery[].asset->url
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getPricing() {
@@ -52,7 +57,7 @@ export async function getPricing() {
         period
       }
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getMenu() {
@@ -66,7 +71,7 @@ export async function getMenu() {
         price
       }
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getReviews() {
@@ -79,7 +84,7 @@ export async function getReviews() {
       text,
       "avatar": avatar.asset->url
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getSiteSettings() {
@@ -98,7 +103,7 @@ export async function getSiteSettings() {
       "heroImage": heroImage.asset->url,
       "logo": logo.asset->url
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getGalleries() {
@@ -115,7 +120,7 @@ export async function getGalleries() {
         "video": video.asset->url
       }
     }
-  `);
+  `, {}, cacheOptions);
 }
 
 export async function getGalleryBySlug(slug: string) {
@@ -132,5 +137,5 @@ export async function getGalleryBySlug(slug: string) {
         "video": video.asset->url
       }
     }
-  `, { slug });
+  `, { slug }, cacheOptions);
 }

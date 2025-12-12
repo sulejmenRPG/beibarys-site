@@ -1,4 +1,5 @@
 import styles from './Hero.module.css';
+import Image from 'next/image';
 import { Waves, Home, Target, Utensils, ChevronDown } from 'lucide-react';
 
 interface HeroProps {
@@ -10,12 +11,16 @@ export default function Hero({ heroImage }: HeroProps) {
 
     return (
         <section id="hero" className={styles.hero}>
-            {/* Background image */}
-            <div
+            {/* Optimized background image */}
+            <Image
+                src={backgroundUrl}
+                alt="BEIBARYS - территория комфорта"
+                fill
+                priority
+                quality={85}
+                sizes="100vw"
                 className={styles.backgroundImage}
-                style={{
-                    backgroundImage: `url('${backgroundUrl}')`
-                }}
+                style={{ objectFit: 'cover' }}
             />
             <div className={styles.overlay}></div>
 
@@ -30,10 +35,10 @@ export default function Hero({ heroImage }: HeroProps) {
                     всего в 30 минутах от центра Астаны
                 </p>
                 <div className={styles.buttons}>
-                    <a href="#contacts" className="btn btn-primary">
+                    <a href="/#contacts" className="btn btn-primary">
                         Забронировать
                     </a>
-                    <a href="#services" className="btn btn-secondary">
+                    <a href="/#services" className="btn btn-secondary">
                         Узнать больше
                     </a>
                 </div>
