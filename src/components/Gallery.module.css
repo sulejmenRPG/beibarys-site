@@ -185,10 +185,10 @@
 
 .closeBtn {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 56px;
-    height: 56px;
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
     background: white;
     border: none;
     border-radius: 50%;
@@ -200,6 +200,27 @@
     z-index: 9999999 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Larger tap area on mobile */
+@media (max-width: 768px) {
+    .closeBtn {
+        width: 56px;
+        height: 56px;
+        top: 12px;
+        right: 12px;
+    }
+
+    .closeBtn::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        bottom: -10px;
+        left: -10px;
+    }
 }
 
 .closeBtn:hover {

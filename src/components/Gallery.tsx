@@ -50,23 +50,32 @@ function MediaModal({
     }, [onClose, onPrev, onNext]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
+        // Don't track swipes that start on buttons
+        const target = e.target as HTMLElement;
+        if (target.closest('button')) return;
         touchStartX.current = e.touches[0].clientX;
+        touchEndX.current = e.touches[0].clientX; // Reset end position
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('button')) return;
         touchEndX.current = e.touches[0].clientX;
     };
 
     const handleTouchEnd = () => {
         const diff = touchStartX.current - touchEndX.current;
-        const threshold = 50;
-        if (Math.abs(diff) > threshold) {
+        const threshold = 80; // Increased threshold for less accidental swipes
+        if (Math.abs(diff) > threshold && touchStartX.current !== 0) {
             if (diff > 0) {
                 onNext();
             } else {
                 onPrev();
             }
         }
+        // Reset
+        touchStartX.current = 0;
+        touchEndX.current = 0;
     };
 
     const handleBackdropClick = (e: React.MouseEvent) => {
@@ -87,8 +96,10 @@ function MediaModal({
             <button
                 className={styles.closeBtn}
                 onClick={(e) => { e.stopPropagation(); onClose(); }}
+                onTouchEnd={(e) => { e.stopPropagation(); onClose(); }}
                 type="button"
                 aria-label="Закрыть"
+                style={{ touchAction: 'manipulation' }}
             >
                 <X size={32} />
             </button>
