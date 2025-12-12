@@ -59,13 +59,6 @@ html {
   overscroll-behavior: none;
 }
 
-/* Disable smooth scroll on mobile - causes jank */
-@media (max-width: 767px) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg);
