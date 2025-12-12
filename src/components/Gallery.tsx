@@ -250,13 +250,11 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
                             >
                                 <div className={styles.imageWrapper}>
                                     {item.video ? (
-                                        <video
-                                            className={styles.videoThumb}
-                                            src={item.video}
-                                            muted
-                                            playsInline
-                                            preload="metadata"
-                                        />
+                                        <div className={styles.videoPlaceholder}>
+                                            <div className={styles.videoPlayIcon}>
+                                                <Play size={32} fill="currentColor" />
+                                            </div>
+                                        </div>
                                     ) : item.image ? (
                                         <Image
                                             src={item.image}

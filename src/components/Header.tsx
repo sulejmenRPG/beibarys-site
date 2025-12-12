@@ -17,9 +17,9 @@ const navLinks = [
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const pathname = usePathname();
 
-    // На внутренних страницах (offer, damages) всегда показываем scrolled стиль
     const isInnerPage = pathname !== '/';
 
     useEffect(() => {
@@ -27,12 +27,41 @@ export default function Header() {
             setIsScrolled(window.scrollY > 50);
         };
 
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 1024);
+            if (window.innerWidth >= 1024) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        // Initial check
+        handleResize();
+
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
-    // На внутренних страницах или при скролле — показываем белый фон
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isMobileMenuOpen]);
+
     const showScrolledStyle = isScrolled || isInnerPage;
+
+    const handleNavClick = () => {
+        setIsMobileMenuOpen(false);
+    };
 
     return (
         <header className={`${styles.header} ${showScrolledStyle ? styles.scrolled : ''}`}>
@@ -45,18 +74,20 @@ export default function Header() {
                     </div>
                 </a>
 
-                <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.navOpen : ''}`}>
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            className={styles.navLink}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {link.name}
-                        </a>
-                    ))}
-                </nav>
+                {/* Desktop nav - always visible on desktop */}
+                {!isMobile && (
+                    <nav className={styles.desktopNav}>
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                className={styles.navLink}
+                            >
+                                {link.name}
+                            </a>
+                        ))}
+                    </nav>
+                )}
 
                 <a href="/#booking" className={styles.bookBtn}>
                     Забронировать
@@ -73,8 +104,20 @@ export default function Header() {
                 </button>
             </div>
 
-            {isMobileMenuOpen && (
-                <div className={styles.mobileOverlay} onClick={() => setIsMobileMenuOpen(false)} />
+            {/* Mobile nav - only rendered when open */}
+            {isMobile && isMobileMenuOpen && (
+                <nav className={styles.mobileNav}>
+                    {navLinks.map((link) => (
+                        <a
+                            key={link.name}
+                            href={link.href}
+                            className={styles.mobileNavLink}
+                            onClick={handleNavClick}
+                        >
+                            {link.name}
+                        </a>
+                    ))}
+                </nav>
             )}
         </header>
     );
