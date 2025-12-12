@@ -29,7 +29,6 @@
     align-items: center;
     gap: 12px;
     text-decoration: none;
-    z-index: 1001;
 }
 
 .logoIcon {
@@ -182,31 +181,67 @@
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile Navigation - fullscreen overlay */
-.mobileNav {
+/* ========================================
+   Mobile Menu Overlay (Portal)
+   Rendered directly to body via createPortal
+   ======================================== */
+.mobileMenuOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     background: var(--color-bg);
-    z-index: 999;
+    z-index: 99999;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    animation: fadeIn 0.2s ease;
+    animation: slideIn 0.25s ease-out;
 }
 
-@keyframes fadeIn {
+@keyframes slideIn {
     from {
         opacity: 0;
+        transform: translateY(-20px);
     }
 
     to {
         opacity: 1;
+        transform: translateY(0);
     }
+}
+
+.closeMenuBtn {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    color: var(--color-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.closeMenuBtn:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
 }
 
 .mobileNavLink {
@@ -214,12 +249,31 @@
     font-weight: 600;
     color: var(--color-text);
     text-decoration: none;
-    padding: 12px 32px;
+    padding: 12px 40px;
     border-radius: var(--radius-lg);
     transition: all var(--transition-fast);
 }
 
-.mobileNavLink:hover {
+.mobileNavLink:hover,
+.mobileNavLink:active {
     background: rgba(26, 58, 47, 0.08);
     color: var(--color-primary);
+}
+
+.mobileBookBtn {
+    margin-top: 24px;
+    padding: 16px 40px;
+    background: var(--gradient-gold);
+    color: var(--color-primary-dark);
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(201, 169, 98, 0.3);
+    transition: all var(--transition-base);
+}
+
+.mobileBookBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(201, 169, 98, 0.4);
 }

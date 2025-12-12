@@ -20,6 +20,85 @@ interface GalleryProps {
     items: GalleryItem[];
 }
 
+// Video Thumbnail Component - extracts first frame
+function VideoThumbnail({ src, className }: { src: string; className?: string }) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [thumbnail, setThumbnail] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        if (!video || !canvas) return;
+
+        const handleLoadedData = () => {
+            // Seek to first second for better thumbnail
+            video.currentTime = 1;
+        };
+
+        const handleSeeked = () => {
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            try {
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                setThumbnail(dataUrl);
+                setIsLoading(false);
+            } catch {
+                // CORS error - show placeholder
+                setIsLoading(false);
+            }
+        };
+
+        const handleError = () => {
+            setIsLoading(false);
+        };
+
+        video.addEventListener('loadeddata', handleLoadedData);
+        video.addEventListener('seeked', handleSeeked);
+        video.addEventListener('error', handleError);
+
+        return () => {
+            video.removeEventListener('loadeddata', handleLoadedData);
+            video.removeEventListener('seeked', handleSeeked);
+            video.removeEventListener('error', handleError);
+        };
+    }, [src]);
+
+    return (
+        <>
+            {/* Hidden video for extraction */}
+            <video
+                ref={videoRef}
+                src={src}
+                crossOrigin="anonymous"
+                muted
+                playsInline
+                preload="metadata"
+                style={{ display: 'none' }}
+            />
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
+
+            {/* Show thumbnail or placeholder */}
+            {thumbnail ? (
+                <img src={thumbnail} alt="Video preview" className={className} />
+            ) : (
+                <div className={styles.videoPlaceholder}>
+                    {isLoading && <div className={styles.loadingSpinner} />}
+                    <div className={styles.videoPlayIcon}>
+                        <Play size={32} fill="currentColor" />
+                    </div>
+                </div>
+            )}
+        </>
+    );
+}
+
 // Modal Component with navigation and swipe (supports both videos and images)
 function MediaModal({
     items,
@@ -50,11 +129,10 @@ function MediaModal({
     }, [onClose, onPrev, onNext]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        // Don't track swipes that start on buttons
         const target = e.target as HTMLElement;
         if (target.closest('button')) return;
         touchStartX.current = e.touches[0].clientX;
-        touchEndX.current = e.touches[0].clientX; // Reset end position
+        touchEndX.current = e.touches[0].clientX;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
@@ -65,7 +143,7 @@ function MediaModal({
 
     const handleTouchEnd = () => {
         const diff = touchStartX.current - touchEndX.current;
-        const threshold = 80; // Increased threshold for less accidental swipes
+        const threshold = 80;
         if (Math.abs(diff) > threshold && touchStartX.current !== 0) {
             if (diff > 0) {
                 onNext();
@@ -73,7 +151,6 @@ function MediaModal({
                 onPrev();
             }
         }
-        // Reset
         touchStartX.current = 0;
         touchEndX.current = 0;
     };
@@ -250,11 +327,10 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
                             >
                                 <div className={styles.imageWrapper}>
                                     {item.video ? (
-                                        <div className={styles.videoPlaceholder}>
-                                            <div className={styles.videoPlayIcon}>
-                                                <Play size={32} fill="currentColor" />
-                                            </div>
-                                        </div>
+                                        <VideoThumbnail
+                                            src={item.video}
+                                            className={styles.image}
+                                        />
                                     ) : item.image ? (
                                         <Image
                                             src={item.image}
@@ -283,8 +359,8 @@ export default function Gallery({ id, title, subtitle, label, items }: GalleryPr
                 </div>
             </section>
 
-            {/* Modal via Portal */}
-            {mounted && activeIndex !== null && items.length > 0 && (
+            {/* Modal rendered via portal */}
+            {mounted && activeIndex !== null && (
                 <MediaModal
                     items={items}
                     currentIndex={activeIndex}
