@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "BEIBARYS | Территория комфорта в Астане",
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body>
+        <SmoothScroll />
         {children}
       </body>
     </html>

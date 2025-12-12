@@ -54,18 +54,10 @@
 }
 
 html {
-  scroll-behavior: smooth;
   /* Prevent overscroll bounce */
   overscroll-behavior: none;
   /* Prevent layout shift from scrollbar */
   scrollbar-gutter: stable;
-}
-
-/* Disable smooth scroll on mobile to prevent jitter */
-@media (max-width: 767px) {
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 body {
